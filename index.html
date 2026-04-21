@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milan Dhangar — Software Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── THEMES ── */
+[data-theme="dark"] {
+  --bg:      #0d0d0b;
+  --bg2:     #141412;
+  --bg3:     #1a1a17;
+  --surface: #1f1f1c;
+  --border:  #2c2c28;
+  --ink:     #e8e4dc;
+  --muted:   #6a6660;
+  --dim:     #3e3e3a;
+  --green:   #4ade80;
+  --green-btn-txt: #071a10;
+  --green-dk:#1a3d27;
+  --amber-bg:#1f1408;
+  --amber-tx:#d97706;
+  --amber-br:#3d2a0a;
+  --doodle-stroke: #2e2e2a;
+  --doodle-stroke2: #3a3a36;
+  --doodle-m: #e8e4dc;
+  --toggle-bg: #1f1f1c;
+  --toggle-icon: #6a6660;
+}
+
+/* ── LIGHT THEME — vibrant & catchy ── */
+[data-theme="light"] {
+  --bg:      #fffbf5;
+  --bg2:     #fff7ed;
+  --bg3:     #fef0d8;
+  --surface: #ffffff;
+  --border:  #f0d9b8;
+  --ink:     #1a0f00;
+  --muted:   #7a5c3a;
+  --dim:     #d4b896;
+  --green:   #e8450a;           /* fiery coral-orange as accent */
+  --green-btn-txt: #ffffff;
+  --green-dk:#fde8de;
+  --amber-bg:#fff3e0;
+  --amber-tx:#c45d0a;
+  --amber-br:#f5c07a;
+  --doodle-stroke: #f0d4b0;
+  --doodle-stroke2: #e8c899;
+  --doodle-m: #1a0f00;
+  --toggle-bg: #fef4e8;
+  --toggle-icon: #c45d0a;
+  /* extra light-only vars */
+  --accent2: #0057ff;           /* electric blue for pop */
+  --tag-bg:  #fff0e0;
+  --tag-border: #f0c090;
+  --chip-bg: #fff0e0;
+}
+
+/* ── Extra light-mode overrides ── */
+[data-theme="light"] .tag {
+  background: var(--tag-bg);
+  border-color: var(--tag-border);
+  color: #8a5030;
+}
+[data-theme="light"] .tag:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+[data-theme="light"] .chip {
+  background: var(--chip-bg);
+  border-color: var(--tag-border);
+  color: #9a5528;
+}
+[data-theme="light"] .project-type { color: var(--green); }
+[data-theme="light"] .project-arrow { color: var(--green); }
+[data-theme="light"] .nav-status { color: var(--green); }
+[data-theme="light"] .nav-dot { background: var(--green); }
+[data-theme="light"] .btn-solid { background: var(--green); border-color: var(--green); }
+[data-theme="light"] .btn-ghost { color: #1a0f00; border-color: var(--border); }
+[data-theme="light"] .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+[data-theme="light"] .hero-meta-num { color: var(--green); }
+[data-theme="light"] .s-title em { color: var(--green); }
+[data-theme="light"] .contact-title em { color: var(--green); }
+[data-theme="light"] .exp-co { color: var(--green); }
+[data-theme="light"] .c-link:hover { background: var(--bg3); }
+[data-theme="light"] .project-card:hover { background: var(--bg3); }
+[data-theme="light"] .badge-remote { background: #fde8de; color: var(--green); border-color: #f5b8a0; }
+[data-theme="light"] .hero-title-rotate { color: var(--green); }
+/* Warm shadow on light cards */
+[data-theme="light"] .project-card { box-shadow: 0 1px 3px rgba(180,100,30,0.06); }
+[data-theme="light"] .contact-links { box-shadow: 0 2px 12px rgba(180,100,30,0.08); }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s, border-color 0.3s;
+}
+.nav-logo {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.05rem; font-weight: 300;
+  color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 13px; font-weight: 400; color: var(--muted);
+  text-decoration: none; transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+
+.nav-status {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--green); font-weight: 400;
+}
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.theme-toggle {
+  width: 34px; height: 34px; border-radius: 6px;
+  background: var(--toggle-bg); border: 1px solid var(--border);
+  color: var(--toggle-icon);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.2s, border-color 0.2s;
+  font-size: 14px; flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--muted); }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 960px; margin: 0 auto; padding: 5.5rem 2.5rem; }
+hr.rule { border: none; border-top: 1px solid var(--border); max-width: 960px; margin: 0 auto; }
+
+.s-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; display: block;
+}
+.s-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 300; letter-spacing: -0.02em; line-height: 1.1;
+  color: var(--ink); margin-bottom: 3rem;
+}
+.s-title em { font-style: italic; color: var(--green); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2.5rem;
+}
+
+.hero-left {
+  padding: 9rem 0 5rem;
+  max-width: 680px;
+  width: 100%;
+}
+
+.hero-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 1.25rem; display: block;
+}
+
+.hero-title-static {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
+  font-weight: 300; letter-spacing: -0.04em;
+  line-height: 1.0; color: var(--ink);
+  margin-bottom: 0;
+  display: block;
+}
+.hero-title-rotate-wrap {
+  height: clamp(3.2rem, 5.8vw, 5.6rem);
+  overflow: hidden;
+  display: block;
+  margin-bottom: 0.15em;
+}
+.hero-title-rotate {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
+  font-weight: 300; letter-spacing: -0.04em;
+  line-height: 1.0;
+  font-style: italic; color: var(--green);
+  display: flex; flex-direction: column;
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.hero-title-rotate span { display: block; line-height: 1.05; }
+
+.hero-sub {
+  font-size: 1rem; color: var(--muted);
+  font-weight: 300; max-width: 520px;
+  margin-top: 1.5rem; margin-bottom: 2.5rem; line-height: 1.8;
+}
+.hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 13px; font-weight: 400;
+  padding: 0.65rem 1.35rem; border-radius: 4px;
+  text-decoration: none; transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn-solid {
+  background: var(--green); color: var(--green-btn-txt);
+  border: 1px solid var(--green); font-weight: 500;
+}
+.btn-solid:hover { opacity: 0.88; }
+.btn-ghost {
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--muted); }
+
+.hero-meta {
+  margin-top: 3.5rem; padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 2.5rem; flex-wrap: wrap;
+}
+.hero-meta-num {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.9rem; font-weight: 300;
+  color: var(--ink); letter-spacing: -0.04em; line-height: 1;
+}
+[data-theme="dark"] .hero-meta-num { color: var(--ink); }
+.hero-meta-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* doodle removed */
+
+/* Draw-on animation */
+.draw {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: drawLine 2s ease forwards;
+}
+.d1  { animation-delay: 0.0s; }
+.d2  { animation-delay: 0.15s; }
+.d3  { animation-delay: 0.3s; }
+.d4  { animation-delay: 0.45s; }
+.d5  { animation-delay: 0.6s; }
+.d6  { animation-delay: 0.75s; }
+.d7  { animation-delay: 0.9s; }
+.d8  { animation-delay: 1.05s; }
+.d9  { animation-delay: 1.2s; }
+.d10 { animation-delay: 1.35s; }
+.d11 { animation-delay: 1.5s; }
+.d12 { animation-delay: 1.65s; }
+.d13 { animation-delay: 1.8s; }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+.fdot {
+  opacity: 0;
+  animation: fdotIn 0.4s ease forwards;
+}
+.fd1 { animation-delay: 1.6s; }
+.fd2 { animation-delay: 1.75s; }
+.fd3 { animation-delay: 1.9s; }
+.fd4 { animation-delay: 2.0s; }
+.fd5 { animation-delay: 2.1s; }
+@keyframes fdotIn { to { opacity: 1; } }
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.about-text { font-size: 15px; color: var(--muted); line-height: 1.85; font-weight: 300; }
+.about-text p + p { margin-top: 1rem; }
+
+.skills { display: flex; flex-direction: column; gap: 1.5rem; }
+.skill-row-label {
+  font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  font-size: 12px; padding: 3px 10px;
+  border: 1px solid var(--border); border-radius: 3px;
+  color: var(--muted); background: var(--surface); font-weight: 300;
+  transition: border-color 0.15s, color 0.15s;
+}
+.tag:hover { border-color: var(--muted); color: var(--ink); }
+
+/* ── PROJECTS ── */
+.projects {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.project-card {
+  background: var(--bg2); padding: 1.75rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-decoration: none; color: inherit; display: flex; flex-direction: column;
+  transition: background 0.15s;
+}
+.project-card:nth-child(2n) { border-right: none; }
+.project-card:nth-last-child(-n+2) { border-bottom: none; }
+.project-card:hover { background: var(--bg3); }
+.project-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.project-type { font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); }
+.project-year { font-size: 11.5px; color: var(--muted); }
+.project-card h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.25rem; font-weight: 300;
+  color: var(--ink); letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2;
+}
+.project-card p { font-size: 13px; color: var(--muted); line-height: 1.65; flex: 1; margin-bottom: 1.25rem; font-weight: 300; }
+.project-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 1.25rem; }
+.chip {
+  font-size: 11px; padding: 2px 8px;
+  background: var(--bg3); color: var(--muted);
+  border: 1px solid var(--border); border-radius: 3px;
+}
+.project-arrow { font-size: 12.5px; color: var(--green); font-weight: 400; }
+
+/* ── EXPERIENCE ── */
+.exp-row {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 2rem; padding: 1.75rem 0;
+  border-top: 1px solid var(--border);
+}
+.exp-row:last-child { border-bottom: 1px solid var(--border); }
+.exp-role { font-size: 14.5px; font-weight: 500; margin-bottom: 2px; color: var(--ink); }
+.exp-co { font-size: 13px; color: var(--green); text-decoration: none; margin-bottom: 10px; display: inline-block; font-weight: 300; }
+.exp-co:hover { text-decoration: underline; }
+.exp-bullets { list-style: none; }
+.exp-bullets li {
+  font-size: 13px; color: var(--muted); line-height: 1.65; padding-left: 1rem;
+  position: relative; margin-bottom: 2px; font-weight: 300;
+}
+.exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--border); font-size: 12px; }
+.exp-badge {
+  display: inline-block; font-size: 10.5px; font-weight: 400;
+  padding: 2px 8px; border-radius: 3px; margin-top: 10px;
+}
+.badge-onsite { background: var(--amber-bg); color: var(--amber-tx); border: 1px solid var(--amber-br); }
+.badge-remote { background: var(--green-dk); color: var(--green); border: 1px solid color-mix(in srgb, var(--green) 30%, transparent); }
+.exp-date { font-size: 12px; color: var(--muted); white-space: nowrap; font-weight: 300; }
+
+/* ── CONTACT ── */
+#contact { background: var(--bg2); border-top: 1px solid var(--border); }
+.contact-wrap { max-width: 960px; margin: 0 auto; padding: 6rem 2.5rem; }
+.contact-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300; color: var(--ink); letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 3rem;
+}
+.contact-title em { font-style: italic; color: var(--green); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.contact-desc { font-size: 15px; color: var(--muted); line-height: 1.8; font-weight: 300; }
+.contact-links {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.c-link {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none; color: var(--ink);
+  transition: background 0.15s;
+}
+.c-link:last-child { border-bottom: none; }
+.c-link:hover { background: var(--bg3); }
+.c-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; color: var(--muted); }
+.c-label { font-size: 10.5px; color: var(--muted); display: block; }
+.c-value { font-size: 13.5px; color: var(--ink); font-weight: 300; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg); border-top: 1px solid var(--border);
+  padding: 1.5rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESUME BUTTON ── */
+.btn-resume {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  font-weight: 500;
+}
+.btn-resume:hover { background: var(--green); color: var(--green-btn-txt); }
+[data-theme="light"] .btn-resume { color: var(--green); border-color: var(--green); }
+[data-theme="light"] .btn-resume:hover { background: var(--green); color: #fff; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  #hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 7rem 2rem 3rem; max-width: 100%; margin: 0; }
+
+}
+
+@media (max-width: 700px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .nav-status span:not(.nav-dot) { display: none; } /* hide "Open to work" text, keep dot */
+  .wrap { padding: 3.5rem 1.25rem; }
+  .hero-left { padding: 6.5rem 1.25rem 2.5rem; }
+
+  .hero-title-static,
+  .hero-title-rotate span { font-size: clamp(2.4rem, 9vw, 3.4rem); }
+  .hero-title-rotate-wrap { height: clamp(2.6rem, 9.5vw, 3.6rem); }
+
+  .hero-sub { font-size: 0.93rem; margin-top: 1rem; margin-bottom: 2rem; }
+  .hero-ctas { gap: 0.5rem; }
+  .btn { font-size: 12.5px; padding: 0.58rem 1.1rem; }
+  .hero-meta { gap: 1.5rem; margin-top: 2.5rem; padding-top: 1.5rem; }
+  .hero-meta-num { font-size: 1.55rem; }
+
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .projects { grid-template-columns: 1fr; }
+  .project-card:nth-child(n) { border-right: none; border-bottom: 1px solid var(--border); }
+  .project-card:last-child { border-bottom: none; }
+  .exp-row { grid-template-columns: 1fr; gap: 0.2rem; }
+  footer { flex-direction: column; gap: 0.3rem; text-align: center; padding: 1.25rem; }
+  hr.rule { margin: 0 1.25rem; }
+  .s-title { font-size: 1.6rem; margin-bottom: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-left { padding: 6rem 0 2rem; }
+  .hero-ctas { flex-wrap: wrap; }
+  .btn { flex: 1 1 auto; justify-content: center; min-width: 120px; }
+  .hero-meta { gap: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Milan Dhangar</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-status"><span class="nav-dot"></span>Open to work</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    <span class="hero-label">B.Tech CSE · Class of 2025 · Noida, UP</span>
+
+    <span class="hero-title-static">Full-Stack</span>
+    <div class="hero-title-rotate-wrap">
+      <div class="hero-title-rotate" id="rotatingTitle">
+        <span>Developer</span>
+        <span>Frontend Dev</span>
+        <span>MERN Expert</span>
+        <span>Software Eng.</span>
+      </div>
+    </div>
+
+    <p class="hero-sub">I build complete web applications — responsive frontends, solid backends, and everything in between. MERN stack, TypeScript, three real-world internships.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn btn-solid">View Projects ↓</a>
+      <a href="https://drive.google.com/file/d/1gfywjkMNE4k9kN8NYtyyP8fsHDm06JSY/view?usp=drive_link" target="_blank" rel="noopener" class="btn btn-resume">↓ Resume</a>
+      <a href="https://github.com/milandhangar123" target="_blank" rel="noopener" class="btn btn-ghost">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/milan-dhangar-608384226" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
+    </div>
+    <div class="hero-meta">
+      <div>
+        <div class="hero-meta-num">3</div>
+        <div class="hero-meta-label">Internships</div>
+      </div>
+      <div>
+        <div class="hero-meta-num">4+</div>
+        <div class="hero-meta-label">Projects shipped</div>
+      </div>
+      <div>
+        <div class="hero-meta-num">MERN</div>
+        <div class="hero-meta-label">Stack</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: removed doodle -->
+  <div class="hero-right" style="display:none">
+    <svg class="doodle-svg" viewBox="0 0 500 600" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Skin tone -->
+        <style>
+          .skin   { fill: #FDDBB4; }
+          .skin-s { fill: #F0C090; }
+          .hoodie { fill: #2a3a5e; }
+          .hoodie-s { fill: #1e2d4a; }
+          .laptop-body { fill: #c8cdd6; }
+          .laptop-s    { fill: #9aa0ad; }
+          .screen-bg   { fill: #0d1117; }
+          .pop-in { opacity:0; animation: fdotIn 0.35s ease forwards; }
+        </style>
+      </defs>
+
+      <!-- ── Background dark circle (like the reference) ── -->
+      <circle cx="250" cy="270" r="210" fill="var(--bg3)" opacity="0.9"/>
+      <circle cx="250" cy="270" r="210" stroke="var(--border)" stroke-width="1.5" fill="none"/>
+
+      <!-- ── Floating code lines behind figure (green streaks) ── -->
+      <!-- left stack -->
+      <rect class="pop-in" style="animation-delay:0.1s" x="30" y="130" width="55" height="5" rx="2.5" fill="var(--green)" opacity="0.55"/>
+      <rect class="pop-in" style="animation-delay:0.15s" x="30" y="143" width="38" height="5" rx="2.5" fill="var(--green)" opacity="0.35"/>
+      <rect class="pop-in" style="animation-delay:0.2s" x="30" y="156" width="48" height="5" rx="2.5" fill="var(--green)" opacity="0.45"/>
+      <rect class="pop-in" style="animation-delay:0.25s" x="30" y="169" width="30" height="5" rx="2.5" fill="var(--green)" opacity="0.3"/>
+      <rect class="pop-in" style="animation-delay:0.3s" x="30" y="182" width="52" height="5" rx="2.5" fill="var(--green)" opacity="0.4"/>
+      <rect class="pop-in" style="animation-delay:0.35s" x="30" y="195" width="42" height="5" rx="2.5" fill="var(--green)" opacity="0.28"/>
+      <!-- right stack -->
+      <rect class="pop-in" style="animation-delay:0.12s" x="415" y="130" width="55" height="5" rx="2.5" fill="var(--green)" opacity="0.5"/>
+      <rect class="pop-in" style="animation-delay:0.18s" x="415" y="143" width="40" height="5" rx="2.5" fill="var(--green)" opacity="0.35"/>
+      <rect class="pop-in" style="animation-delay:0.22s" x="415" y="156" width="50" height="5" rx="2.5" fill="var(--green)" opacity="0.4"/>
+      <rect class="pop-in" style="animation-delay:0.28s" x="415" y="169" width="32" height="5" rx="2.5" fill="var(--green)" opacity="0.28"/>
+      <rect class="pop-in" style="animation-delay:0.32s" x="415" y="182" width="55" height="5" rx="2.5" fill="var(--green)" opacity="0.45"/>
+      <rect class="pop-in" style="animation-delay:0.38s" x="415" y="195" width="38" height="5" rx="2.5" fill="var(--green)" opacity="0.3"/>
+
+      <!-- ═══════════════════════════════
+           LAPTOP
+      ═══════════════════════════════ -->
+      <!-- Laptop base -->
+      <rect class="pop-in" style="animation-delay:0.4s" x="118" y="400" width="264" height="18" rx="4" class="laptop-body" fill="#c8cdd6"/>
+      <!-- Laptop hinge shadow -->
+      <rect class="pop-in" style="animation-delay:0.4s" x="118" y="398" width="264" height="6" rx="2" fill="#9aa0ad"/>
+      <!-- Laptop lid -->
+      <rect class="pop-in" style="animation-delay:0.42s" x="130" y="300" width="240" height="100" rx="8" fill="#c8cdd6"/>
+      <rect class="pop-in" style="animation-delay:0.42s" x="130" y="300" width="240" height="100" rx="8" fill="#b0b6c0" opacity="0.4"/>
+      <!-- Screen -->
+      <rect class="pop-in" style="animation-delay:0.45s" x="140" y="308" width="220" height="84" rx="4" fill="#0d1117"/>
+      <!-- Skull on screen -->
+      <!-- skull head -->
+      <ellipse class="pop-in" style="animation-delay:0.65s" cx="250" cy="340" rx="20" ry="18" fill="#e8e4dc" opacity="0.9"/>
+      <!-- skull eyes -->
+      <ellipse class="pop-in" style="animation-delay:0.68s" cx="243" cy="338" rx="5" ry="6" fill="#0d1117"/>
+      <ellipse class="pop-in" style="animation-delay:0.68s" cx="257" cy="338" rx="5" ry="6" fill="#0d1117"/>
+      <!-- skull nose -->
+      <path class="pop-in" style="animation-delay:0.7s" d="M248 347 L252 347 L252 351 L248 351 Z" fill="#0d1117" opacity="0.7"/>
+      <!-- skull teeth -->
+      <rect class="pop-in" style="animation-delay:0.72s" x="240" y="354" width="6" height="5" rx="1" fill="#0d1117"/>
+      <rect class="pop-in" style="animation-delay:0.72s" x="247" y="354" width="6" height="5" rx="1" fill="#0d1117"/>
+      <rect class="pop-in" style="animation-delay:0.72s" x="254" y="354" width="6" height="5" rx="1" fill="#0d1117"/>
+      <!-- skull jaw -->
+      <path class="pop-in" style="animation-delay:0.73s" d="M230 352 Q250 362 270 352" stroke="#e8e4dc" stroke-width="2" fill="none" opacity="0.7"/>
+      <!-- screen glow -->
+      <rect x="140" y="308" width="220" height="84" rx="4" fill="var(--green)" opacity="0.04"/>
+
+      <!-- Touchpad -->
+      <rect class="pop-in" style="animation-delay:0.44s" x="220" y="404" width="60" height="10" rx="3" fill="#b0b6c0"/>
+
+      <!-- ═══════════════════════════════
+           BODY / HOODIE
+      ═══════════════════════════════ -->
+      <!-- Hoodie body — wide trapezoid -->
+      <path class="pop-in" style="animation-delay:0.5s"
+        d="M155 400 C148 370 140 340 145 310 L175 295 Q210 285 250 283 Q290 285 325 295 L355 310 C360 340 352 370 345 400 Z"
+        fill="#2a3a5e"/>
+      <!-- Hoodie darker shadow sides -->
+      <path class="pop-in" style="animation-delay:0.5s"
+        d="M155 400 C148 370 140 340 145 310 L175 295 Q195 300 210 305 L200 400 Z"
+        fill="#1e2d4a" opacity="0.5"/>
+      <path class="pop-in" style="animation-delay:0.5s"
+        d="M345 400 C352 370 360 340 355 310 L325 295 Q305 300 290 305 L300 400 Z"
+        fill="#1e2d4a" opacity="0.5"/>
+
+      <!-- Front pocket / pouch -->
+      <path class="pop-in" style="animation-delay:0.52s"
+        d="M215 345 Q250 340 285 345 L282 390 Q250 396 218 390 Z"
+        fill="#1e2d4a" opacity="0.7"/>
+
+      <!-- Arms -->
+      <!-- Left arm -->
+      <path class="pop-in" style="animation-delay:0.51s"
+        d="M155 330 Q120 340 115 370 Q112 390 125 400 L160 400 C155 375 148 355 155 330Z"
+        fill="#2a3a5e"/>
+      <!-- Right arm -->
+      <path class="pop-in" style="animation-delay:0.51s"
+        d="M345 330 Q380 340 385 370 Q388 390 375 400 L340 400 C345 375 352 355 345 330Z"
+        fill="#2a3a5e"/>
+
+      <!-- Hands on laptop -->
+      <!-- Left hand -->
+      <ellipse class="pop-in" style="animation-delay:0.55s" cx="155" cy="400" rx="22" ry="10" fill="#FDDBB4"/>
+      <!-- Right hand -->
+      <ellipse class="pop-in" style="animation-delay:0.55s" cx="345" cy="400" rx="22" ry="10" fill="#FDDBB4"/>
+
+      <!-- ═══════════════════════════════
+           HOOD
+      ═══════════════════════════════ -->
+      <!-- Hood shape — big rounded triangle over head -->
+      <path class="pop-in" style="animation-delay:0.48s"
+        d="M175 295 Q180 240 250 220 Q320 240 325 295 Q290 285 250 283 Q210 285 175 295Z"
+        fill="#2a3a5e"/>
+      <!-- Hood inner shadow -->
+      <path class="pop-in" style="animation-delay:0.49s"
+        d="M190 293 Q195 252 250 236 Q305 252 310 293 Q280 284 250 283 Q220 284 190 293Z"
+        fill="#162038"/>
+      <!-- Hood rim highlight -->
+      <path class="pop-in" style="animation-delay:0.49s"
+        d="M190 293 Q195 252 250 236 Q305 252 310 293"
+        stroke="#3d5080" stroke-width="2" fill="none" opacity="0.6"/>
+
+      <!-- ═══════════════════════════════
+           FACE
+      ═══════════════════════════════ -->
+      <!-- Face oval -->
+      <ellipse class="pop-in" style="animation-delay:0.56s" cx="250" cy="275" rx="38" ry="42" fill="#FDDBB4"/>
+      <!-- Face shadow bottom -->
+      <ellipse class="pop-in" style="animation-delay:0.56s" cx="250" cy="300" rx="30" ry="16" fill="#F0C090" opacity="0.5"/>
+      <!-- Ear left -->
+      <ellipse class="pop-in" style="animation-delay:0.57s" cx="213" cy="275" rx="7" ry="9" fill="#FDDBB4"/>
+      <!-- Ear right -->
+      <ellipse class="pop-in" style="animation-delay:0.57s" cx="287" cy="275" rx="7" ry="9" fill="#FDDBB4"/>
+
+      <!-- Eyes -->
+      <ellipse class="pop-in" style="animation-delay:0.6s" cx="236" cy="268" rx="7" ry="8" fill="#2a1a0e"/>
+      <ellipse class="pop-in" style="animation-delay:0.6s" cx="264" cy="268" rx="7" ry="8" fill="#2a1a0e"/>
+      <!-- Eye shine -->
+      <circle class="pop-in" style="animation-delay:0.62s" cx="239" cy="265" r="2.5" fill="white" opacity="0.9"/>
+      <circle class="pop-in" style="animation-delay:0.62s" cx="267" cy="265" r="2.5" fill="white" opacity="0.9"/>
+      <!-- Eyebrows -->
+      <path class="pop-in" style="animation-delay:0.61s" d="M229 258 Q236 254 243 258" stroke="#2a1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path class="pop-in" style="animation-delay:0.61s" d="M257 258 Q264 254 271 258" stroke="#2a1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- Smile / smirk -->
+      <path class="pop-in" style="animation-delay:0.63s" d="M240 286 Q250 293 260 286" stroke="#c0845a" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Nose hint -->
+      <path class="pop-in" style="animation-delay:0.62s" d="M247 278 Q250 284 253 278" stroke="#d4905a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- Cheek blush -->
+      <ellipse class="pop-in" style="animation-delay:0.64s" cx="224" cy="282" rx="8" ry="5" fill="#f4a0a0" opacity="0.35"/>
+      <ellipse class="pop-in" style="animation-delay:0.64s" cx="276" cy="282" rx="8" ry="5" fill="#f4a0a0" opacity="0.35"/>
+
+      <!-- Hair peek from hood -->
+      <path class="pop-in" style="animation-delay:0.58s"
+        d="M216 250 Q218 238 226 234 Q230 240 228 250"
+        fill="#2a1a0e" opacity="0.7"/>
+      <path class="pop-in" style="animation-delay:0.58s"
+        d="M284 250 Q282 238 274 234 Q270 240 272 250"
+        fill="#2a1a0e" opacity="0.7"/>
+
+      <!-- ═══════════════════════════════
+           FLOATING TECH BADGES
+      ═══════════════════════════════ -->
+      <!-- </> badge top-left -->
+      <rect class="pop-in" style="animation-delay:0.8s" x="42" y="80" width="68" height="28" rx="6" fill="var(--green)" opacity="0.15" stroke="var(--green)" stroke-width="1.2"/>
+      <text class="pop-in" style="animation-delay:0.82s" x="76" y="99" font-family="monospace" font-size="13" fill="var(--green)" text-anchor="middle" opacity="0.85">&lt;/&gt;</text>
+
+      <!-- {} badge top-right -->
+      <rect class="pop-in" style="animation-delay:0.84s" x="390" y="80" width="68" height="28" rx="6" fill="var(--green)" opacity="0.12" stroke="var(--green)" stroke-width="1.2"/>
+      <text class="pop-in" style="animation-delay:0.86s" x="424" y="99" font-family="monospace" font-size="13" fill="var(--green)" text-anchor="middle" opacity="0.8">{  }</text>
+
+      <!-- npm badge bottom-left -->
+      <rect class="pop-in" style="animation-delay:0.88s" x="38" y="450" width="60" height="26" rx="5" fill="var(--doodle-stroke2)" opacity="0.3" stroke="var(--doodle-stroke2)" stroke-width="1"/>
+      <text class="pop-in" style="animation-delay:0.9s" x="68" y="468" font-family="monospace" font-size="12" fill="var(--doodle-m)" text-anchor="middle" opacity="0.65">npm</text>
+
+      <!-- git badge bottom-right -->
+      <rect class="pop-in" style="animation-delay:0.9s" x="402" y="450" width="60" height="26" rx="5" fill="var(--doodle-stroke2)" opacity="0.3" stroke="var(--doodle-stroke2)" stroke-width="1"/>
+      <text class="pop-in" style="animation-delay:0.92s" x="432" y="468" font-family="monospace" font-size="12" fill="var(--doodle-m)" text-anchor="middle" opacity="0.65">git</text>
+
+      <!-- star sparkles -->
+      <path class="pop-in" style="animation-delay:0.75s" d="M86 200 L86 188 M80 194 L92 194 M81 189 L91 199 M81 199 L91 189" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      <path class="pop-in" style="animation-delay:0.78s" d="M414 200 L414 188 M408 194 L420 194 M409 189 L419 199 M409 199 L419 189" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+
+      <!-- Bottom label -->
+      <text class="pop-in" style="animation-delay:1s" x="250" y="535" font-family="'DM Sans', sans-serif" font-size="11" fill="var(--muted)" text-anchor="middle" letter-spacing="3" opacity="0.7">FULL-STACK DEV</text>
+      <line class="pop-in" style="animation-delay:1.02s" x1="170" y1="542" x2="330" y2="542" stroke="var(--border)" stroke-width="1" opacity="0.6"/>
+
+    </svg>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ABOUT -->
+<section class="wrap reveal" id="about">
+  <span class="s-label">01 — About</span>
+  <h2 class="s-title">Who I <em>am</em></h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a B.Tech Computer Science graduate from BSA College of Engineering and Technology, Mathura (Class of 2025). Across three internships — at Aptara, GeeksforGeeks, and Tycho Technologies — I've worked on everything from enterprise XML pipelines to full-stack MERN products shipped to real users.</p>
+      <p>I'm drawn to building things that are fast, clean, and actually solve a problem. I use AI tooling in my workflow daily — Claude, Cursor, GitHub Copilot — and believe good developers know how to leverage these tools without losing the fundamentals.</p>
+      <p>Looking for full-time software roles where I can contribute from day one.</p>
+    </div>
+    <div class="skills">
+      <div>
+        <div class="skill-row-label">Languages</div>
+        <div class="tags">
+          <span class="tag">JavaScript</span><span class="tag">TypeScript</span>
+          <span class="tag">HTML / CSS</span><span class="tag">SQL</span>
+          <span class="tag">Java</span><span class="tag">PHP</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-row-label">Frameworks</div>
+        <div class="tags">
+          <span class="tag">React.js</span><span class="tag">Next.js</span>
+          <span class="tag">Node.js</span><span class="tag">Express.js</span>
+          <span class="tag">Laravel</span><span class="tag">Tailwind CSS</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-row-label">Databases & Tools</div>
+        <div class="tags">
+          <span class="tag">MongoDB</span><span class="tag">MySQL</span>
+          <span class="tag">Git / GitHub</span><span class="tag">Postman</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-row-label">AI Tooling</div>
+        <div class="tags">
+          <span class="tag">Claude</span><span class="tag">ChatGPT</span>
+          <span class="tag">Copilot</span><span class="tag">Cursor</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- PROJECTS -->
+<section class="wrap reveal" id="work">
+  <span class="s-label">02 — Projects</span>
+  <h2 class="s-title">Things I've <em>built</em></h2>
+  <div class="projects">
+    <a href="https://acada-now-milan-dhangars-projects.vercel.app/" target="_blank" rel="noopener" class="project-card">
+      <div class="project-top"><span class="project-type">Ed-Tech</span><span class="project-year">Present</span></div>
+      <h3>AcadNow</h3>
+      <p>Full-featured platform for course creation, consumption, and rating. Secure JWT auth, dynamic course management, and real-time student feedback.</p>
+      <div class="project-chips"><span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">JWT</span></div>
+      <span class="project-arrow">Live demo →</span>
+    </a>
+    <a href="https://expense-phi-cyan.vercel.app/" target="_blank" rel="noopener" class="project-card">
+      <div class="project-top"><span class="project-type">Finance</span><span class="project-year">Nov 2025</span></div>
+      <h3>Expense Tracker</h3>
+      <p>Personal finance web app with real-time balance updates and full CRUD for income and expenses. Type-safe codebase, responsive UI.</p>
+      <div class="project-chips"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span></div>
+      <span class="project-arrow">Live demo →</span>
+    </a>
+    <a href="https://priest-finder-web-app.onrender.com/" target="_blank" rel="noopener" class="project-card">
+      <div class="project-top"><span class="project-type">Community</span><span class="project-year">Mar 2025</span></div>
+      <h3>Priest Finder</h3>
+      <p>Community platform connecting users with local priests in Mathura-Vrindavan. Includes profiles, temple timings, and service listings.</p>
+      <div class="project-chips"><span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">MongoDB</span><span class="chip">JWT</span></div>
+      <span class="project-arrow">Live demo →</span>
+    </a>
+    <a href="https://github.com/milandhangar123" target="_blank" rel="noopener" class="project-card">
+      <div class="project-top"><span class="project-type">Open Source</span><span class="project-year">Ongoing</span></div>
+      <h3>More on GitHub</h3>
+      <p>Additional experiments, coursework, and side projects — REST API boilerplates, UI components, and more. Everything public and documented.</p>
+      <div class="project-chips"><span class="chip">Various</span></div>
+      <span class="project-arrow">Browse repos →</span>
+    </a>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- EXPERIENCE -->
+<section class="wrap reveal" id="experience">
+  <span class="s-label">03 — Experience</span>
+  <h2 class="s-title">Where I've <em>worked</em></h2>
+  <div>
+    <div class="exp-row">
+      <div>
+        <p class="exp-role">XML Programmer</p>
+        <span class="exp-co">Aptara</span>
+        <ul class="exp-bullets">
+          <li>Managed XML data workflows using PHP, .NET, and Java in a live enterprise publishing environment.</li>
+          <li>Automated XML pipelines via backend scripting; enforced schema validations for data integrity.</li>
+          <li>Debugged REST API issues and server-side scripts in a production system.</li>
+        </ul>
+        <span class="exp-badge badge-onsite">Onsite · Noida</span>
+      </div>
+      <div><div class="exp-date">Feb – Jun 2025</div></div>
+    </div>
+    <div class="exp-row">
+      <div>
+        <p class="exp-role">Software Development Intern</p>
+        <a href="https://drive.google.com/file/d/1lyH33D5j7x0KE8pBX3TYiYBZ7B1v0uhB/view?usp=drive_link" target="_blank" rel="noopener" class="exp-co">GeeksforGeeks ↗</a>
+        <ul class="exp-bullets">
+          <li>Built full-stack web applications using the MERN stack.</li>
+          <li>Developed and tested RESTful APIs with Postman; built reusable React components.</li>
+          <li>Collaborated using Git and GitHub for version control and code reviews.</li>
+        </ul>
+        <span class="exp-badge badge-onsite">Onsite · Noida</span>
+      </div>
+      <div><div class="exp-date">Sep – Nov 2024</div></div>
+    </div>
+    <div class="exp-row">
+      <div>
+        <p class="exp-role">Web Developer Intern</p>
+        <span class="exp-co">Tycho Technologies Pvt. Ltd</span>
+        <ul class="exp-bullets">
+          <li>Built responsive UIs using HTML5, CSS3, and JavaScript with a mobile-first approach.</li>
+          <li>Wrote unit tests to ensure code reliability and consistent cross-device behavior.</li>
+        </ul>
+        <span class="exp-badge badge-remote">Remote</span>
+      </div>
+      <div><div class="exp-date">Jul – Aug 2024</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap reveal">
+    <span class="s-label">04 — Contact</span>
+    <h2 class="contact-title">Ready to build<br><em>something good?</em></h2>
+    <div class="contact-grid">
+      <p class="contact-desc">Open to full-time developer roles, freelance projects, and interesting collaborations. Based in Mathura, UP — works well remotely too. I reply fast.</p>
+      <div class="contact-links">
+        <a href="mailto:ms8755301254@gmail.com" class="c-link">
+          <span class="c-icon">✉</span>
+          <div><span class="c-label">Email</span><span class="c-value">ms8755301254@gmail.com</span></div>
+        </a>
+        <a href="tel:+918755301254" class="c-link">
+          <span class="c-icon">↗</span>
+          <div><span class="c-label">Phone</span><span class="c-value">+91 87553 01254</span></div>
+        </a>
+        <a href="https://www.linkedin.com/in/milan-dhangar-608384226" target="_blank" rel="noopener" class="c-link">
+          <span class="c-icon" style="font-weight:600;font-size:11px;">in</span>
+          <div><span class="c-label">LinkedIn</span><span class="c-value">milan-dhangar-608384226</span></div>
+        </a>
+        <a href="https://github.com/milandhangar123" target="_blank" rel="noopener" class="c-link">
+          <span class="c-icon">⌥</span>
+          <div><span class="c-label">GitHub</span><span class="c-value">milandhangar123</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Milan Dhangar · All rights reserved</p>
+  <p>Noida, Uttar Pradesh</p>
+</footer>
+
+<script>
+  /* ── THEME TOGGLE ── */
+  const html = document.documentElement;
+  const btn  = document.getElementById('themeToggle');
+  let dark = true;
+
+  if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    dark = false; html.setAttribute('data-theme', 'light'); btn.textContent = '☽';
+  }
+
+  btn.addEventListener('click', () => {
+    dark = !dark;
+    html.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.textContent = dark ? '☀' : '☽';
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    dark = saved === 'dark';
+    html.setAttribute('data-theme', saved);
+    btn.textContent = dark ? '☀' : '☽';
+  }
+
+  /* ── ROTATING TITLE ── */
+  const rotor = document.getElementById('rotatingTitle');
+  let cur = 0;
+  const itemH = rotor.children[0].getBoundingClientRect().height ||
+                parseFloat(getComputedStyle(rotor.parentElement).height);
+
+  setInterval(() => {
+    cur = (cur + 1) % rotor.children.length;
+    const h = rotor.children[0].offsetHeight || itemH;
+    rotor.style.transform = `translateY(-${cur * h}px)`;
+  }, 2200);
+
+  /* ── SMOOTH SCROLL ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  /* ── NAV SHADOW ── */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 10 ? '0 1px 0 var(--border)' : 'none';
+  }, { passive: true });
+
+  /* ── REVEAL ── */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+  /* ── HERO FADE IN ── */
+  document.querySelectorAll('.hero-left > *').forEach((el, i) => {
+    el.style.cssText = `opacity:0;transform:translateY(10px);transition:opacity 0.45s ${i*0.1+0.1}s ease,transform 0.45s ${i*0.1+0.1}s ease`;
+    setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'none'; }, 80);
+  });
+</script>
+</body>
+</html>
