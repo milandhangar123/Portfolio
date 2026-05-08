@@ -41,7 +41,7 @@
   --ink:     #1a0f00;
   --muted:   #7a5c3a;
   --dim:     #d4b896;
-  --green:   #e8450a;           /* fiery coral-orange as accent */
+  --green:   #e8450a;
   --green-btn-txt: #ffffff;
   --green-dk:#fde8de;
   --amber-bg:#fff3e0;
@@ -52,14 +52,12 @@
   --doodle-m: #1a0f00;
   --toggle-bg: #fef4e8;
   --toggle-icon: #c45d0a;
-  /* extra light-only vars */
-  --accent2: #0057ff;           /* electric blue for pop */
+  --accent2: #0057ff;
   --tag-bg:  #fff0e0;
   --tag-border: #f0c090;
   --chip-bg: #fff0e0;
 }
 
-/* ── Extra light-mode overrides ── */
 [data-theme="light"] .tag {
   background: var(--tag-bg);
   border-color: var(--tag-border);
@@ -89,7 +87,6 @@
 [data-theme="light"] .project-card:hover { background: var(--bg3); }
 [data-theme="light"] .badge-remote { background: #fde8de; color: var(--green); border-color: #f5b8a0; }
 [data-theme="light"] .hero-title-rotate { color: var(--green); }
-/* Warm shadow on light cards */
 [data-theme="light"] .project-card { box-shadow: 0 1px 3px rgba(180,100,30,0.06); }
 [data-theme="light"] .contact-links { box-shadow: 0 2px 12px rgba(180,100,30,0.08); }
 
@@ -250,39 +247,7 @@ hr.rule { border: none; border-top: 1px solid var(--border); max-width: 960px; m
 [data-theme="dark"] .hero-meta-num { color: var(--ink); }
 .hero-meta-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
 
-/* doodle removed */
-
-/* Draw-on animation */
-.draw {
-  stroke-dasharray: 2000;
-  stroke-dashoffset: 2000;
-  animation: drawLine 2s ease forwards;
-}
-.d1  { animation-delay: 0.0s; }
-.d2  { animation-delay: 0.15s; }
-.d3  { animation-delay: 0.3s; }
-.d4  { animation-delay: 0.45s; }
-.d5  { animation-delay: 0.6s; }
-.d6  { animation-delay: 0.75s; }
-.d7  { animation-delay: 0.9s; }
-.d8  { animation-delay: 1.05s; }
-.d9  { animation-delay: 1.2s; }
-.d10 { animation-delay: 1.35s; }
-.d11 { animation-delay: 1.5s; }
-.d12 { animation-delay: 1.65s; }
-.d13 { animation-delay: 1.8s; }
-@keyframes drawLine { to { stroke-dashoffset: 0; } }
-
-.fdot {
-  opacity: 0;
-  animation: fdotIn 0.4s ease forwards;
-}
-.fd1 { animation-delay: 1.6s; }
-.fd2 { animation-delay: 1.75s; }
-.fd3 { animation-delay: 1.9s; }
-.fd4 { animation-delay: 2.0s; }
-.fd5 { animation-delay: 2.1s; }
-@keyframes fdotIn { to { opacity: 1; } }
+html { scroll-behavior: smooth; }
 
 /* ── ABOUT ── */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
@@ -317,6 +282,8 @@ hr.rule { border: none; border-top: 1px solid var(--border); max-width: 960px; m
 }
 .project-card:nth-child(2n) { border-right: none; }
 .project-card:nth-last-child(-n+2) { border-bottom: none; }
+/* When odd total, last card in left column also loses bottom border */
+.project-card:last-child { border-bottom: none; }
 .project-card:hover { background: var(--bg3); }
 .project-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .project-type { font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); }
@@ -411,17 +378,20 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
 [data-theme="light"] .btn-resume { color: var(--green); border-color: var(--green); }
 [data-theme="light"] .btn-resume:hover { background: var(--green); color: #fff; }
 
+/* ── PROJECTS: handle odd count border fix ── */
+/* 7 cards: last card (7th, left col) needs no bottom border */
+.projects .project-card:nth-child(7) { border-bottom: none; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   #hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-left { padding: 7rem 2rem 3rem; max-width: 100%; margin: 0; }
-
 }
 
 @media (max-width: 700px) {
   nav { padding: 1rem 1.25rem; }
   .nav-links { display: none; }
-  .nav-status span:not(.nav-dot) { display: none; } /* hide "Open to work" text, keep dot */
+  .nav-status span:not(.nav-dot) { display: none; }
   .wrap { padding: 3.5rem 1.25rem; }
   .hero-left { padding: 6.5rem 1.25rem 2.5rem; }
 
@@ -439,6 +409,8 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
   .projects { grid-template-columns: 1fr; }
   .project-card:nth-child(n) { border-right: none; border-bottom: 1px solid var(--border); }
   .project-card:last-child { border-bottom: none; }
+  /* reset the nth-child(7) fix on mobile */
+  .projects .project-card:nth-child(7) { border-bottom: 1px solid var(--border); }
   .exp-row { grid-template-columns: 1fr; gap: 0.2rem; }
   footer { flex-direction: column; gap: 0.3rem; text-align: center; padding: 1.25rem; }
   hr.rule { margin: 0 1.25rem; }
@@ -472,8 +444,6 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
 
 <!-- HERO -->
 <section id="hero">
-
-  <!-- LEFT -->
   <div class="hero-left">
     <span class="hero-label">B.Tech CSE · Class of 2025 · Noida, UP</span>
 
@@ -500,7 +470,7 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
         <div class="hero-meta-label">Internships</div>
       </div>
       <div>
-        <div class="hero-meta-num">4+</div>
+        <div class="hero-meta-num">7+</div>
         <div class="hero-meta-label">Projects shipped</div>
       </div>
       <div>
@@ -508,194 +478,6 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
         <div class="hero-meta-label">Stack</div>
       </div>
     </div>
-  </div>
-
-  <!-- RIGHT: removed doodle -->
-  <div class="hero-right" style="display:none">
-    <svg class="doodle-svg" viewBox="0 0 500 600" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <!-- Skin tone -->
-        <style>
-          .skin   { fill: #FDDBB4; }
-          .skin-s { fill: #F0C090; }
-          .hoodie { fill: #2a3a5e; }
-          .hoodie-s { fill: #1e2d4a; }
-          .laptop-body { fill: #c8cdd6; }
-          .laptop-s    { fill: #9aa0ad; }
-          .screen-bg   { fill: #0d1117; }
-          .pop-in { opacity:0; animation: fdotIn 0.35s ease forwards; }
-        </style>
-      </defs>
-
-      <!-- ── Background dark circle (like the reference) ── -->
-      <circle cx="250" cy="270" r="210" fill="var(--bg3)" opacity="0.9"/>
-      <circle cx="250" cy="270" r="210" stroke="var(--border)" stroke-width="1.5" fill="none"/>
-
-      <!-- ── Floating code lines behind figure (green streaks) ── -->
-      <!-- left stack -->
-      <rect class="pop-in" style="animation-delay:0.1s" x="30" y="130" width="55" height="5" rx="2.5" fill="var(--green)" opacity="0.55"/>
-      <rect class="pop-in" style="animation-delay:0.15s" x="30" y="143" width="38" height="5" rx="2.5" fill="var(--green)" opacity="0.35"/>
-      <rect class="pop-in" style="animation-delay:0.2s" x="30" y="156" width="48" height="5" rx="2.5" fill="var(--green)" opacity="0.45"/>
-      <rect class="pop-in" style="animation-delay:0.25s" x="30" y="169" width="30" height="5" rx="2.5" fill="var(--green)" opacity="0.3"/>
-      <rect class="pop-in" style="animation-delay:0.3s" x="30" y="182" width="52" height="5" rx="2.5" fill="var(--green)" opacity="0.4"/>
-      <rect class="pop-in" style="animation-delay:0.35s" x="30" y="195" width="42" height="5" rx="2.5" fill="var(--green)" opacity="0.28"/>
-      <!-- right stack -->
-      <rect class="pop-in" style="animation-delay:0.12s" x="415" y="130" width="55" height="5" rx="2.5" fill="var(--green)" opacity="0.5"/>
-      <rect class="pop-in" style="animation-delay:0.18s" x="415" y="143" width="40" height="5" rx="2.5" fill="var(--green)" opacity="0.35"/>
-      <rect class="pop-in" style="animation-delay:0.22s" x="415" y="156" width="50" height="5" rx="2.5" fill="var(--green)" opacity="0.4"/>
-      <rect class="pop-in" style="animation-delay:0.28s" x="415" y="169" width="32" height="5" rx="2.5" fill="var(--green)" opacity="0.28"/>
-      <rect class="pop-in" style="animation-delay:0.32s" x="415" y="182" width="55" height="5" rx="2.5" fill="var(--green)" opacity="0.45"/>
-      <rect class="pop-in" style="animation-delay:0.38s" x="415" y="195" width="38" height="5" rx="2.5" fill="var(--green)" opacity="0.3"/>
-
-      <!-- ═══════════════════════════════
-           LAPTOP
-      ═══════════════════════════════ -->
-      <!-- Laptop base -->
-      <rect class="pop-in" style="animation-delay:0.4s" x="118" y="400" width="264" height="18" rx="4" class="laptop-body" fill="#c8cdd6"/>
-      <!-- Laptop hinge shadow -->
-      <rect class="pop-in" style="animation-delay:0.4s" x="118" y="398" width="264" height="6" rx="2" fill="#9aa0ad"/>
-      <!-- Laptop lid -->
-      <rect class="pop-in" style="animation-delay:0.42s" x="130" y="300" width="240" height="100" rx="8" fill="#c8cdd6"/>
-      <rect class="pop-in" style="animation-delay:0.42s" x="130" y="300" width="240" height="100" rx="8" fill="#b0b6c0" opacity="0.4"/>
-      <!-- Screen -->
-      <rect class="pop-in" style="animation-delay:0.45s" x="140" y="308" width="220" height="84" rx="4" fill="#0d1117"/>
-      <!-- Skull on screen -->
-      <!-- skull head -->
-      <ellipse class="pop-in" style="animation-delay:0.65s" cx="250" cy="340" rx="20" ry="18" fill="#e8e4dc" opacity="0.9"/>
-      <!-- skull eyes -->
-      <ellipse class="pop-in" style="animation-delay:0.68s" cx="243" cy="338" rx="5" ry="6" fill="#0d1117"/>
-      <ellipse class="pop-in" style="animation-delay:0.68s" cx="257" cy="338" rx="5" ry="6" fill="#0d1117"/>
-      <!-- skull nose -->
-      <path class="pop-in" style="animation-delay:0.7s" d="M248 347 L252 347 L252 351 L248 351 Z" fill="#0d1117" opacity="0.7"/>
-      <!-- skull teeth -->
-      <rect class="pop-in" style="animation-delay:0.72s" x="240" y="354" width="6" height="5" rx="1" fill="#0d1117"/>
-      <rect class="pop-in" style="animation-delay:0.72s" x="247" y="354" width="6" height="5" rx="1" fill="#0d1117"/>
-      <rect class="pop-in" style="animation-delay:0.72s" x="254" y="354" width="6" height="5" rx="1" fill="#0d1117"/>
-      <!-- skull jaw -->
-      <path class="pop-in" style="animation-delay:0.73s" d="M230 352 Q250 362 270 352" stroke="#e8e4dc" stroke-width="2" fill="none" opacity="0.7"/>
-      <!-- screen glow -->
-      <rect x="140" y="308" width="220" height="84" rx="4" fill="var(--green)" opacity="0.04"/>
-
-      <!-- Touchpad -->
-      <rect class="pop-in" style="animation-delay:0.44s" x="220" y="404" width="60" height="10" rx="3" fill="#b0b6c0"/>
-
-      <!-- ═══════════════════════════════
-           BODY / HOODIE
-      ═══════════════════════════════ -->
-      <!-- Hoodie body — wide trapezoid -->
-      <path class="pop-in" style="animation-delay:0.5s"
-        d="M155 400 C148 370 140 340 145 310 L175 295 Q210 285 250 283 Q290 285 325 295 L355 310 C360 340 352 370 345 400 Z"
-        fill="#2a3a5e"/>
-      <!-- Hoodie darker shadow sides -->
-      <path class="pop-in" style="animation-delay:0.5s"
-        d="M155 400 C148 370 140 340 145 310 L175 295 Q195 300 210 305 L200 400 Z"
-        fill="#1e2d4a" opacity="0.5"/>
-      <path class="pop-in" style="animation-delay:0.5s"
-        d="M345 400 C352 370 360 340 355 310 L325 295 Q305 300 290 305 L300 400 Z"
-        fill="#1e2d4a" opacity="0.5"/>
-
-      <!-- Front pocket / pouch -->
-      <path class="pop-in" style="animation-delay:0.52s"
-        d="M215 345 Q250 340 285 345 L282 390 Q250 396 218 390 Z"
-        fill="#1e2d4a" opacity="0.7"/>
-
-      <!-- Arms -->
-      <!-- Left arm -->
-      <path class="pop-in" style="animation-delay:0.51s"
-        d="M155 330 Q120 340 115 370 Q112 390 125 400 L160 400 C155 375 148 355 155 330Z"
-        fill="#2a3a5e"/>
-      <!-- Right arm -->
-      <path class="pop-in" style="animation-delay:0.51s"
-        d="M345 330 Q380 340 385 370 Q388 390 375 400 L340 400 C345 375 352 355 345 330Z"
-        fill="#2a3a5e"/>
-
-      <!-- Hands on laptop -->
-      <!-- Left hand -->
-      <ellipse class="pop-in" style="animation-delay:0.55s" cx="155" cy="400" rx="22" ry="10" fill="#FDDBB4"/>
-      <!-- Right hand -->
-      <ellipse class="pop-in" style="animation-delay:0.55s" cx="345" cy="400" rx="22" ry="10" fill="#FDDBB4"/>
-
-      <!-- ═══════════════════════════════
-           HOOD
-      ═══════════════════════════════ -->
-      <!-- Hood shape — big rounded triangle over head -->
-      <path class="pop-in" style="animation-delay:0.48s"
-        d="M175 295 Q180 240 250 220 Q320 240 325 295 Q290 285 250 283 Q210 285 175 295Z"
-        fill="#2a3a5e"/>
-      <!-- Hood inner shadow -->
-      <path class="pop-in" style="animation-delay:0.49s"
-        d="M190 293 Q195 252 250 236 Q305 252 310 293 Q280 284 250 283 Q220 284 190 293Z"
-        fill="#162038"/>
-      <!-- Hood rim highlight -->
-      <path class="pop-in" style="animation-delay:0.49s"
-        d="M190 293 Q195 252 250 236 Q305 252 310 293"
-        stroke="#3d5080" stroke-width="2" fill="none" opacity="0.6"/>
-
-      <!-- ═══════════════════════════════
-           FACE
-      ═══════════════════════════════ -->
-      <!-- Face oval -->
-      <ellipse class="pop-in" style="animation-delay:0.56s" cx="250" cy="275" rx="38" ry="42" fill="#FDDBB4"/>
-      <!-- Face shadow bottom -->
-      <ellipse class="pop-in" style="animation-delay:0.56s" cx="250" cy="300" rx="30" ry="16" fill="#F0C090" opacity="0.5"/>
-      <!-- Ear left -->
-      <ellipse class="pop-in" style="animation-delay:0.57s" cx="213" cy="275" rx="7" ry="9" fill="#FDDBB4"/>
-      <!-- Ear right -->
-      <ellipse class="pop-in" style="animation-delay:0.57s" cx="287" cy="275" rx="7" ry="9" fill="#FDDBB4"/>
-
-      <!-- Eyes -->
-      <ellipse class="pop-in" style="animation-delay:0.6s" cx="236" cy="268" rx="7" ry="8" fill="#2a1a0e"/>
-      <ellipse class="pop-in" style="animation-delay:0.6s" cx="264" cy="268" rx="7" ry="8" fill="#2a1a0e"/>
-      <!-- Eye shine -->
-      <circle class="pop-in" style="animation-delay:0.62s" cx="239" cy="265" r="2.5" fill="white" opacity="0.9"/>
-      <circle class="pop-in" style="animation-delay:0.62s" cx="267" cy="265" r="2.5" fill="white" opacity="0.9"/>
-      <!-- Eyebrows -->
-      <path class="pop-in" style="animation-delay:0.61s" d="M229 258 Q236 254 243 258" stroke="#2a1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <path class="pop-in" style="animation-delay:0.61s" d="M257 258 Q264 254 271 258" stroke="#2a1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <!-- Smile / smirk -->
-      <path class="pop-in" style="animation-delay:0.63s" d="M240 286 Q250 293 260 286" stroke="#c0845a" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <!-- Nose hint -->
-      <path class="pop-in" style="animation-delay:0.62s" d="M247 278 Q250 284 253 278" stroke="#d4905a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <!-- Cheek blush -->
-      <ellipse class="pop-in" style="animation-delay:0.64s" cx="224" cy="282" rx="8" ry="5" fill="#f4a0a0" opacity="0.35"/>
-      <ellipse class="pop-in" style="animation-delay:0.64s" cx="276" cy="282" rx="8" ry="5" fill="#f4a0a0" opacity="0.35"/>
-
-      <!-- Hair peek from hood -->
-      <path class="pop-in" style="animation-delay:0.58s"
-        d="M216 250 Q218 238 226 234 Q230 240 228 250"
-        fill="#2a1a0e" opacity="0.7"/>
-      <path class="pop-in" style="animation-delay:0.58s"
-        d="M284 250 Q282 238 274 234 Q270 240 272 250"
-        fill="#2a1a0e" opacity="0.7"/>
-
-      <!-- ═══════════════════════════════
-           FLOATING TECH BADGES
-      ═══════════════════════════════ -->
-      <!-- </> badge top-left -->
-      <rect class="pop-in" style="animation-delay:0.8s" x="42" y="80" width="68" height="28" rx="6" fill="var(--green)" opacity="0.15" stroke="var(--green)" stroke-width="1.2"/>
-      <text class="pop-in" style="animation-delay:0.82s" x="76" y="99" font-family="monospace" font-size="13" fill="var(--green)" text-anchor="middle" opacity="0.85">&lt;/&gt;</text>
-
-      <!-- {} badge top-right -->
-      <rect class="pop-in" style="animation-delay:0.84s" x="390" y="80" width="68" height="28" rx="6" fill="var(--green)" opacity="0.12" stroke="var(--green)" stroke-width="1.2"/>
-      <text class="pop-in" style="animation-delay:0.86s" x="424" y="99" font-family="monospace" font-size="13" fill="var(--green)" text-anchor="middle" opacity="0.8">{  }</text>
-
-      <!-- npm badge bottom-left -->
-      <rect class="pop-in" style="animation-delay:0.88s" x="38" y="450" width="60" height="26" rx="5" fill="var(--doodle-stroke2)" opacity="0.3" stroke="var(--doodle-stroke2)" stroke-width="1"/>
-      <text class="pop-in" style="animation-delay:0.9s" x="68" y="468" font-family="monospace" font-size="12" fill="var(--doodle-m)" text-anchor="middle" opacity="0.65">npm</text>
-
-      <!-- git badge bottom-right -->
-      <rect class="pop-in" style="animation-delay:0.9s" x="402" y="450" width="60" height="26" rx="5" fill="var(--doodle-stroke2)" opacity="0.3" stroke="var(--doodle-stroke2)" stroke-width="1"/>
-      <text class="pop-in" style="animation-delay:0.92s" x="432" y="468" font-family="monospace" font-size="12" fill="var(--doodle-m)" text-anchor="middle" opacity="0.65">git</text>
-
-      <!-- star sparkles -->
-      <path class="pop-in" style="animation-delay:0.75s" d="M86 200 L86 188 M80 194 L92 194 M81 189 L91 199 M81 199 L91 189" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-      <path class="pop-in" style="animation-delay:0.78s" d="M414 200 L414 188 M408 194 L420 194 M409 189 L419 199 M409 199 L419 189" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-
-      <!-- Bottom label -->
-      <text class="pop-in" style="animation-delay:1s" x="250" y="535" font-family="'DM Sans', sans-serif" font-size="11" fill="var(--muted)" text-anchor="middle" letter-spacing="3" opacity="0.7">FULL-STACK DEV</text>
-      <line class="pop-in" style="animation-delay:1.02s" x1="170" y1="542" x2="330" y2="542" stroke="var(--border)" stroke-width="1" opacity="0.6"/>
-
-    </svg>
   </div>
 </section>
 
@@ -753,6 +535,8 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
   <span class="s-label">02 — Projects</span>
   <h2 class="s-title">Things I've <em>built</em></h2>
   <div class="projects">
+    
+    <!-- Original 4 -->
     <a href="https://acada-now-milan-dhangars-projects.vercel.app/" target="_blank" rel="noopener" class="project-card">
       <div class="project-top"><span class="project-type">Ed-Tech</span><span class="project-year">Present</span></div>
       <h3>AcadNow</h3>
@@ -760,6 +544,15 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
       <div class="project-chips"><span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">JWT</span></div>
       <span class="project-arrow">Live demo →</span>
     </a>
+    <!-- NEW: E-Commerce -->
+    <a href="https://ecommerce-one-kappa-56.vercel.app/" target="_blank" rel="noopener" class="project-card">
+      <div class="project-top"><span class="project-type">E-Commerce</span><span class="project-year">Mar 2026</span></div>
+      <h3>E-Commerce Store</h3>
+      <p>Full-stack MERN e-commerce platform with a customer-facing storefront and a dedicated admin panel for product, order, and inventory management.</p>
+      <div class="project-chips"><span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">MongoDB</span><span class="chip">Admin Panel</span></div>
+      <span class="project-arrow">Live demo →</span>
+    </a>
+    
     <a href="https://expense-phi-cyan.vercel.app/" target="_blank" rel="noopener" class="project-card">
       <div class="project-top"><span class="project-type">Finance</span><span class="project-year">Nov 2025</span></div>
       <h3>Expense Tracker</h3>
@@ -767,6 +560,7 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
       <div class="project-chips"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">Tailwind CSS</span></div>
       <span class="project-arrow">Live demo →</span>
     </a>
+
     <a href="https://priest-finder-web-app.onrender.com/" target="_blank" rel="noopener" class="project-card">
       <div class="project-top"><span class="project-type">Community</span><span class="project-year">Mar 2025</span></div>
       <h3>Priest Finder</h3>
@@ -774,6 +568,27 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
       <div class="project-chips"><span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">MongoDB</span><span class="chip">JWT</span></div>
       <span class="project-arrow">Live demo →</span>
     </a>
+
+    <a href="https://milandhangar123.github.io/weather-application/" target="_blank" rel="noopener" class="project-card">
+      <div class="project-top"><span class="project-type">Utility</span><span class="project-year">Oct 2024</span></div>
+      <h3>Weather App</h3>
+      <p>Real-time weather application fetching live data via a public weather API. Shows temperature, conditions, and forecasts for any searched city.</p>
+      <div class="project-chips"><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span><span class="chip">Weather API</span></div>
+      <span class="project-arrow">Live demo →</span>
+    </a>
+
+    <!-- NEW: E-Learning -->
+    <a href="https://milandhangar123.github.io/E-Learning-website/" target="_blank" rel="noopener" class="project-card">
+      <div class="project-top"><span class="project-type">Ed-Tech</span><span class="project-year">Jun 2024</span></div>
+      <h3>E-Learning Website</h3>
+      <p>Responsive e-learning landing and course-browse site built with vanilla HTML, CSS, and JavaScript. Clean UI with smooth interactions and mobile-first layout.</p>
+      <div class="project-chips"><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span></div>
+      <span class="project-arrow">Live demo →</span>
+    </a>
+
+   
+
+    <!-- More on GitHub — always last -->
     <a href="https://github.com/milandhangar123" target="_blank" rel="noopener" class="project-card">
       <div class="project-top"><span class="project-type">Open Source</span><span class="project-year">Ongoing</span></div>
       <h3>More on GitHub</h3>
@@ -781,6 +596,7 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
       <div class="project-chips"><span class="chip">Various</span></div>
       <span class="project-arrow">Browse repos →</span>
     </a>
+
   </div>
 </section>
 
